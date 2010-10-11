@@ -1,6 +1,21 @@
 = omg
 
-Description goes here.
+Quick and dirty debugging in Rails.
+
+Sometimes you just want to see whether a method was called. Those times you don't want to write out some rubbish just to see that. Why not just write
+
+  def some_method
+    omg!
+    # do stuff
+  end
+
+When the method is called, in the log you will find
+
+    ==============
+    OMG! some_method called!
+    ==============
+    
+Easy.
 
 == Note on Patches/Pull Requests
  
