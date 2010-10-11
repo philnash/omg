@@ -11,9 +11,12 @@ Sometimes you just want to see whether a method was called. Those times you don'
 
 When the method is called, in the log you will find
 
-    ==============
-    OMG! some_method called!
-    ==============
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  OMG!
+  some_method called!
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  
+Or, pass an object to omg! and it will print out the result of the object's inspect method
     
 Easy.
 
