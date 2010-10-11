@@ -11,7 +11,8 @@ begin
     gem.homepage = "http://github.com/philnash/omg"
     gem.authors = ["philnash"]
     gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
-    gem.add_dependency 'rails'
+    gem.add_dependency 'activerecord'
+    gem.add_dependency 'actionpack'
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
