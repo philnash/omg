@@ -1,26 +1,43 @@
+require 'singleton'
 module Omg
-  def self.debug(str)
-    defined?(Rails) ? Rails.logger.debug(str) : $stdout.puts(str)
-  end
-  
-  def omg!(obj=nil)
-    Omg.debug('')
-    Omg.debug('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-    Omg.debug "OMG!"
-    if obj
-      Omg.debug obj.inspect
+  def omg!(*args)
+    logger = OmgLogger.instance
+    logger.log('')
+    logger.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    logger.log "OMG!"
+    if args.length > 0
+      args.each do |arg|
+        logger.log arg.inspect
+      end
     else
-      Omg.debug "#{omg_method} called!"
+      logger.log "#{caller[1][/`([^']*)'/, 1]} called!"
     end
-    Omg.debug('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-    Omg.debug('')
-  end
-  
-  private
-  
-  def omg_method
-    caller[1][/`([^']*)'/, 1]
+    logger.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    logger.log('')
   end
 end
 
 Object.send(:include, Omg)
+
+class OmgLogger
+  include Singleton
+  
+  def log_with(logger, method)
+    @logger = logger
+    @method = method
+  end
+  
+  def log(str)
+    if @logger && @method
+      @logger.send(@method.to_sym, str)
+    elsif defined?(Rails) && Rails.logger
+      if @method
+        Rails.logger.send(@method.to_sym, str)
+      else
+        Rails.logger.debug(str)
+      end
+    else
+      $stdout.puts(str)
+    end
+  end
+end
