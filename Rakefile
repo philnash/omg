@@ -10,6 +10,8 @@ begin
     gem.email = "philnash@gmail.com"
     gem.homepage = "http://github.com/philnash/omg"
     gem.authors = ["philnash"]
+    gem.add_development_dependency "shoulda", ">= 0"
+    gem.add_development_dependency "flexmock", ">= 0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
@@ -36,8 +38,6 @@ rescue LoadError
     abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
   end
 end
-
-task :test => :check_dependencies
 
 task :default => :test
 

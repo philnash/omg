@@ -2,18 +2,19 @@ require 'singleton'
 module Omg
   def omg!(*args)
     logger = OmgLogger.instance
-    logger.log('')
-    logger.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-    logger.log "OMG!"
+    text = "\n"
+    text << "~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+    text << "OMG!\n"
     if args.length > 0
       args.each do |arg|
-        logger.log arg.inspect
+        text << "#{arg.inspect}\n"
       end
     else
-      logger.log "#{caller[1][/`([^']*)'/, 1]} called!"
+      text << "#{caller[0][/`([^']*)'/, 1]} called!\n"
     end
-    logger.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-    logger.log('')
+    text << "~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+    text << "\n"
+    logger.log(text)
   end
 end
 
@@ -21,7 +22,7 @@ Object.send(:include, Omg)
 
 class OmgLogger
   include Singleton
-  
+  attr_accessor :logger, :method
   def log_with(logger, method)
     @logger = logger
     @method = method
